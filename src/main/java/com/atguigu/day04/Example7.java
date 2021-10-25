@@ -52,7 +52,10 @@ public class Example7 {
             long windowStart = currTs - currTs % windowSize;
 
             // 如果mapState中不包含windowStart这个key，说明value是这个窗口的第一个元素
+            // 对于事件时间，以如下逻辑来进行判断
+            // if (ctx.timerService().currentWatermark() < windowEnd && !mapState.contains(windowStart))
             if (!mapState.contains(windowStart)) {
+                // 创建新窗口和新的累加器
                 mapState.put(windowStart, 1L);
             } else {
                 // 来一条数据，累加器加一
