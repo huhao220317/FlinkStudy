@@ -32,6 +32,8 @@ public class Example6 {
                         Tuple2.of("b", 8)
                 );
 
+        // 两条流在connect之前，都经过了keyBy
+        // 就可以将来自两条流的相同key的数据合在一条流中进行处理
         stream1.keyBy(r -> r.f0)
                 .connect(stream2.keyBy(r -> r.f0))
                 // 进入到process方法的数据，key是相同的
