@@ -37,7 +37,7 @@ public class Example2 {
                         urlArr[random.nextInt(urlArr.length)],
                         Calendar.getInstance().getTimeInMillis()
                 ));
-                Thread.sleep(1000L);
+                Thread.sleep(100L);
             }
         }
 
