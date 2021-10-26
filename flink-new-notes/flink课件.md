@@ -810,6 +810,29 @@ graph LR
 - 特点：时间无对齐
 - 只有Flink支持会话窗口
 
+## 触发器（Trigger）
+
+使用 `KeyedProcessFunction` 可以实现触发器的功能。
+
+Flink 中的事件：
+
+- 数据到来，触发 `processElement`/`map` 的执行。
+- 时间到达定时器的时间戳，触发定时器的执行。
+- 水位线到达算子，推高算子的水位线。
+- 时间到达窗口结束时间，触发 `process` 方法的执行。
+
+事件会进入到事件队列，然后一个一个的执行。例如，定时器会进入到一个优先队列中，然后每隔一段时间检查一下优先队列里面有没有可以执行的定时器。如果有可以执行的定时器，那么出队列执行。
+
+需求：滚动窗口的长度是 10 秒钟，每隔 10 秒钟统计一次 pv 数据。在第一条数据后面的每个整数秒都输出一次窗口中的 pv 数据。在窗口的第一个数据到达时，在数据的时间戳的下一个整数秒输出窗口中的 pv 数据。
+
+例如：时间戳是 1234 毫秒的事件到达，下一个整数秒是多少？
+
+时间戳是 ts ，ts 的下一个整数秒是多少？
+
+$ts后面的整数秒 = ts + 1000 - ts \% 1000$
+
+$1234后面的整数秒 = 1234 + 1000 - 1234 \% 1000 = 2000$
+
 <div style="page-break-after: always; break-after: page;"></div>
 
 # 水位线
@@ -858,7 +881,7 @@ Chubby $\rightarrow$ Zookeeper
 ### 单流转换
 
 - map/filter/flatMap
-- ProcessFunction
+- `ProcessFunction`
 
 ### 键控流
 
@@ -866,7 +889,7 @@ Chubby $\rightarrow$ Zookeeper
 - reduce
 - `KeyedProcessFunction`
 
-### 开窗
+### 单流开窗
 
 - `.windowAll()`
 - `ProcessAllWindowFunction`
@@ -933,7 +956,7 @@ Chubby $\rightarrow$ Zookeeper
 - 二叉查找树
 - 平衡二叉查找树：AVl，红黑树
 
-### 多插树
+### 多叉树
 
 - 2-3-4树
 - B树，B+树
