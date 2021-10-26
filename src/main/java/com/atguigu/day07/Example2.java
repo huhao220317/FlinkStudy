@@ -139,6 +139,7 @@ public class Example2 {
         @Override
         public void onTimer(long timestamp, OnTimerContext ctx, Collector<String> out) throws Exception {
             super.onTimer(timestamp, ctx, out);
+            // 如果定时器触发时，appState不为空，说明对应的weixin支付没有来
             if (appState.value() != null) {
                 out.collect("订单号：" + appState.value().orderId + " 对账失败，app支付到达了，weixin支付未到达");
                 appState.clear();
