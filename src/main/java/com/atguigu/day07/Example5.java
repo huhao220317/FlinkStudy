@@ -67,6 +67,7 @@ public class Example5 {
             // 针对第一条数据，注册一个第一天哦啊数据的时间戳后面整数秒的定时器
 
             // 标志位状态变量，用来记录是否是第一个数据到达
+            // 状态变量的作用域是当前窗口
             ValueState<Boolean> isFirstEvent = ctx.getPartitionedState(
                     new ValueStateDescriptor<Boolean>("is-first-event", Types.BOOLEAN)
             );
@@ -101,6 +102,7 @@ public class Example5 {
             return TriggerResult.CONTINUE;
         }
 
+        // clear方法在窗口销毁时调用
         @Override
         public void clear(TimeWindow window, TriggerContext ctx) throws Exception {
             // 标志位状态变量，用来记录是否是第一个数据到达
