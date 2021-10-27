@@ -8,7 +8,7 @@ public class Example1 {
     public static void main(String[] args) throws Exception {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         env.setParallelism(1);
-        
+
         // 每隔10秒钟保存一次检查点，或者说保存一次状态
         env.enableCheckpointing(10 * 1000L);
         // 设置检查点的文件夹的路径
