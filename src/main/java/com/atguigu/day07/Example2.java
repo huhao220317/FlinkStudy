@@ -34,14 +34,17 @@ public class Example2 {
                         // e1.ts指定了e1的时间戳是e1.ts
                         // 第一个参数是要发送的数据
                         // 第二个参数是要发送数据的时间戳
+                        // 会keyBy到处理order-1的CoProcessFunction
                         ctx.collectWithTimestamp(e1, e1.ts);
                         // 发送水位线
                         ctx.emitWatermark(new Watermark(e1.ts - 1L));
                         Event e2 = new Event("order-2", "app-zhifu", 2000L);
+                        // 会keyBy到处理order-2的CoProcessFunction
                         ctx.collectWithTimestamp(e2, e2.ts);
                         ctx.emitWatermark(new Watermark(e2.ts - 1L));
                         ctx.emitWatermark(new Watermark(7000L));
                         Thread.sleep(1000L);
+                        // 数据流的末尾会插入一个+MAX的水位线
                     }
 
                     @Override
@@ -66,10 +69,15 @@ public class Example2 {
                         // 发送水位线
                         ctx.emitWatermark(new Watermark(e1.ts - 1L));
                         ctx.emitWatermark(new Watermark(7000L));
+                        // 睡眠1秒钟，使得第一条流的7000L的水位线有足够的时间
+                        // 进入到CoProcessFunction
+                        // 这样CoProcessFunction的时钟就会推进到7000L
+                        // 因为两条流的7000L的水位线都进入到了CoProcessFunction
                         Thread.sleep(1000L);
                         Event e2 = new Event("order-2", "weixin-zhifu", 9000L);
                         ctx.collectWithTimestamp(e2, e2.ts);
                         ctx.emitWatermark(new Watermark(e2.ts - 1L));
+                        // 数据流的末尾会插入一个+MAX的水位线
                     }
 
                     @Override

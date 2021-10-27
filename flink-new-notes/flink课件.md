@@ -977,9 +977,9 @@ i等于多少？200
 因为i++不是原子操作
 
 lock
-1. register = i;
-2. register = register + 1;
-3. i = register;
+1. register = i; // 将 i 从内存中加载到寄存器（CPU上）
+2. register = register + 1; // 寄存器的数值加一
+3. i = register; // 将 i 从寄存器写回内存
 unlock
     
 ++++++++++++++
@@ -1034,6 +1034,14 @@ ajax(url, callback() {
 
 - 算子状态
 - 键控状态
+
+从作用域的角度看状态变量的分类：
+
+- 算子状态：作用域是任务槽，同一个任务槽的所有子任务都可以访问算子状态。算子状态是物理分区可见。一个任务槽无法访问另一个任务槽的算子状态。
+- 键控状态：作用域是逻辑分区，也就是当前 key 可见。按照 key 隔离开。不同 key 的支流无法访问其他支流的键控状态。
+- 窗口状态变量：`Trigger` 中的 `.getPartitionState()`，还有 `process()` 方法中的 `ctx.windowState().getState()` 。作用域是当前窗口。相同 key 的不同窗口无法访问对方的窗口状态变量。
+
+作用域从上到下越来越小。
 
 ## Flink中的状态
 
