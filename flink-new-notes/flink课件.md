@@ -1122,6 +1122,36 @@ void initializeState(FunctionInitializationContext context) throws Exception;
 
 ![](image33.png)
 
+source刚消费完偏移量为5的kafka的数据。按照奇偶性进行逻辑分区，然后累加。kafka 里数据的大小和offset一样，方便讨论。
+
+Flink 数据流中的事件类型：
+
+- 普通事件（POJO Class，Integer，String，Tuple）
+- 水位线
+- 检查点分界线
+
+幂等操作：
+
+```java
+HashMap.put("name", "zuoyuan");
+HashMap.put("name", "zuoyuan");
+HashMap.put("name", "zuoyuan");
+HashMap.put("name", "zuoyuan");
+```
+
+```mermaid
+graph LR
+	A["kafka"] --> B["flink app"] --> C["kafka"]
+```
+
+保存点和检查点的区别：
+
+- 保存点是手动保存手动恢复的
+- 检查点是自动保存自动恢复的
+- 底层算法完全一样
+
+大数据量的去重，只有一个解法，就是**布隆过滤器**。
+
 ## 从检查点恢复状态
 
 ### Flink程序发生故障
