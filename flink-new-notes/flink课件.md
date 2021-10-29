@@ -1229,3 +1229,43 @@ Thread1:
 7
 ```
 
+# Flink 的官方库
+
+- Flink Core $\rightarrow$ Spark Core & Spark Streaming
+- Flink SQL $\rightarrow$ Spark SQL
+- Flink Gelly $\rightarrow$ Spark GraphX
+- Flink MLlib $\rightarrow$ Spark MLlib
+- Flink CEP $\rightarrow$ Spark ?
+
+# SQL 引擎
+
+- Hive SQL $\rightarrow$ MapReduce
+- Spark SQL $\rightarrow$ Spark RDD Operations
+- Flink SQL $\rightarrow$ Flink 底层API操作
+- MySQL $\rightarrow$ B+树的操作
+
+## Flink SQL 的标准执行流程
+
+
+
+```mermaid
+graph TB
+	A["数据流"] --> B["动态表"]
+	B --> C["在动态表上执行查询"]
+	C --> D["查询结果构成的动态表"]
+	D --> E["数据流"]
+```
+
+```sql
+INSERT INTO table SELECT * FROM A INNER JOIN B WHERE A.id = B.id;
+```
+
+动态表有三种操作：
+
+- `+I`：Insert，插入动态表
+
+- `+U`：Update，更新动态表
+
+- `-U`：Retract，撤回旧数据（不是真的撤回，只是向下游说一声，旧的结果作废了，相当于逻辑删除）
+
+`-U`后面紧跟着`+U`，因为需要在动态表中更新新的数据
