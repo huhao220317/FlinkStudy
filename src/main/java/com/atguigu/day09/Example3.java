@@ -71,6 +71,8 @@ public class Example3 {
                                 9000L
                         );
 
+                        ctx.collectWithTimestamp(e4, e4.ts);
+
                         Thread.sleep(1000L);
                     }
 
