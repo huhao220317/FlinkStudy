@@ -18,7 +18,7 @@ public class Example6 {
         env
                 .readTextFile("/home/zuoyuan/flink0519tutorial/src/main/resources/UserBehavior.csv")
                 .addSink(new FlinkKafkaProducer<String>(
-                        "user-behavior",
+                        "user-behavior-test",
                         new SimpleStringSchema(),
                         properties
                 ));

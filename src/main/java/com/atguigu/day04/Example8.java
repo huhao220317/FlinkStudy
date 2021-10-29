@@ -11,6 +11,7 @@ import org.apache.flink.util.Collector;
 
 import java.util.HashMap;
 
+// 使用确定性有限状态机实现连续三次登录失败
 public class Example8 {
     public static void main(String[] args) throws Exception {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();

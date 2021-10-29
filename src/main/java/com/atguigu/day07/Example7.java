@@ -42,7 +42,7 @@ public class Example7 {
         env
                 .addSource(
                         new FlinkKafkaConsumer<String>(
-                                "user-behavior",
+                                "user-behavior-test",
                                 new SimpleStringSchema(),
                                 properties
                         )
