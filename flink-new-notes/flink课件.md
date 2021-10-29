@@ -1269,3 +1269,76 @@ INSERT INTO table SELECT * FROM A INNER JOIN B WHERE A.id = B.id;
 - `-U`：Retract，撤回旧数据（不是真的撤回，只是向下游说一声，旧的结果作废了，相当于逻辑删除）
 
 `-U`后面紧跟着`+U`，因为需要在动态表中更新新的数据
+
+# Flink 总结
+
+三要素：
+
+- 事件驱动
+- 时间语义
+- 状态
+
+API：
+
+单流转换：
+
+- map/filter/flatMap/ProcessFunction
+
+按键分流：
+
+- keyBy()
+- reduce()
+- **KeyedProcessFunction: ProcessElement, onTimer**, 键控状态变量
+
+按键分流开窗：
+
+- keyBy
+- window
+- **ProcessWindowFunction/AggregateFunction**
+- reduce
+- Trigger
+- allowLateness
+- sideOutput
+
+直接开窗：等价于.keyBy(r -> 1).window()
+
+- window
+- ProcessAllWindowFunction/AggregateFunction
+- Trigger
+
+多流合并：
+
+- **CoProcessFunction**
+- intervalJoin
+- CoMap/CoFlatMap
+
+状态变量：
+
+- **ValueState**
+- **ListState**
+- **MapState**
+
+# 计算机的进阶
+
+所有的基础：**数据结构与算法**，《数据结构与算法分析-Java版》，力扣
+
+操作系统：内存管理，多线程，多进程，异步IO，锁
+
+《深入理解计算机系统》，《操作系统导论》，《C程序设计语言》
+
+函数式编程：《计算机程序的构造和解释》（SICP）
+
+大数据：《数据密集型应用系统设计》（DDIA）
+
+机器学习：《深度学习》（花书），《统计学习方法》
+
+高阶的：
+
+- 类型系统
+- 编译原理
+- cpu设计
+- 分布式系统（Leslie Lamport的论文）
+- 操作系统内核的开发
+- 自动机理论
+- 计算复杂性
+
