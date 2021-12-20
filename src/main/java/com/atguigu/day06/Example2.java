@@ -16,7 +16,7 @@ public class Example2 {
         env.setParallelism(1);
 
         SingleOutputStreamOperator<String> result = env
-                .socketTextStream("localhost", 9999)
+                .socketTextStream("hadoop101", 9999)
                 .map(r -> Tuple2.of(r.split(" ")[0], Long.parseLong(r.split(" ")[1]) * 1000L))
                 .returns(Types.TUPLE(Types.STRING, Types.LONG))
                 .assignTimestampsAndWatermarks(

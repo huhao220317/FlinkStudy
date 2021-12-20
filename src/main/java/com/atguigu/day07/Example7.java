@@ -31,7 +31,7 @@ public class Example7 {
         env.setParallelism(1);
 
         Properties properties = new Properties();
-        properties.setProperty("bootstrap.servers", "localhost:9092");
+        properties.setProperty("bootstrap.servers", "hadoop101:9092");
         properties.setProperty("group.id", "consumer-group");
         properties.setProperty("key.deserializer",
                 "org.apache.kafka.common.serialization.StringDeserializer");

@@ -107,6 +107,7 @@ public class Example5 {
         public void clear(TimeWindow window, TriggerContext ctx) throws Exception {
             // 标志位状态变量，用来记录是否是第一个数据到达
             // 单例
+            //
             ValueState<Boolean> isFirstEvent = ctx.getPartitionedState(
                     new ValueStateDescriptor<Boolean>("is-first-event", Types.BOOLEAN)
             );

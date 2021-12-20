@@ -22,12 +22,12 @@ public class Example1 {
         SingleOutputStreamOperator<LoginEvent> stream = env
                 .fromElements(
                         new LoginEvent("user-1", "fail", 1000L),
+
                         new LoginEvent("user-2", "success", 2000L),
                         new LoginEvent("user-1", "fail", 3000L),
                         new LoginEvent("user-1", "fail", 4000L),
                         new LoginEvent("user-1", "fail", 5000L)
-                )
-                .assignTimestampsAndWatermarks(
+                ).assignTimestampsAndWatermarks(
                         WatermarkStrategy.<LoginEvent>forMonotonousTimestamps()
                                 .withTimestampAssigner(new SerializableTimestampAssigner<LoginEvent>() {
                                     @Override
@@ -35,7 +35,7 @@ public class Example1 {
                                         return element.ts;
                                     }
                                 })
-                );
+                );;
 
         // 定义模板
         // flink cep 的底层将模板翻译成有限状态机

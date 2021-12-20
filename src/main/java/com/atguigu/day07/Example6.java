@@ -13,10 +13,10 @@ public class Example6 {
         env.setParallelism(1);
 
         Properties properties = new Properties();
-        properties.put("bootstrap.servers", "localhost:9092");
+        properties.put("bootstrap.servers", "hadoop101:9092,hadoop102:9092,hadoop103:9092");
 
         env
-                .readTextFile("/home/zuoyuan/flink0519tutorial/src/main/resources/UserBehavior.csv")
+                .readTextFile("D:\\Atguigu\\flink0519\\src\\main\\resources\\UserBehavior.csv")
                 .addSink(new FlinkKafkaProducer<String>(
                         "user-behavior-test",
                         new SimpleStringSchema(),

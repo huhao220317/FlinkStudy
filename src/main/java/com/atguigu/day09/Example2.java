@@ -25,7 +25,10 @@ public class Example2 {
                         new LoginEvent("user-2", "success", 2000L),
                         new LoginEvent("user-1", "fail", 3000L),
                         new LoginEvent("user-1", "fail", 4000L),
-                        new LoginEvent("user-1", "fail", 5000L)
+                        new LoginEvent("user-1", "fail", 5000L),
+                        new LoginEvent("user-1", "fail", 6000L),
+                        new LoginEvent("user-1", "fail", 7000L),
+                        new LoginEvent("user-1", "fail", 8000L)
                 )
                 .assignTimestampsAndWatermarks(
                         WatermarkStrategy.<LoginEvent>forMonotonousTimestamps()
