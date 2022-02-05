@@ -2,6 +2,7 @@ package com.atguigu.day02;
 
 import org.apache.flink.api.common.functions.FilterFunction;
 import org.apache.flink.api.common.functions.FlatMapFunction;
+import org.apache.flink.api.common.typeinfo.Types;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.util.Collector;
 
@@ -9,6 +10,14 @@ public class Example5 {
     public static void main(String[] args) throws Exception {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         env.setParallelism(1);
+        /*
+        * filter 1->0/1
+        * map 1->1
+        * flatmap 1->0/1/n
+        *
+        * 结论：flatMap完全可以取代map/filter
+        *
+        * */
 
         env
                 .addSource(new Example2.ClickSource())
